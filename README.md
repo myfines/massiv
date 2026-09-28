@@ -11,12 +11,13 @@ The project is intentionally **data-first**. No frontend is required to make it 
 ## Dataset
 
 - `data/assets.csv` — stock/ETF → tokenized version mapping.
+- `data/contracts.csv` — exact verified contract/mint addresses by asset and chain.
 - `data/ecosystems.csv` — issuer/platform/chain/rights/trading-hours metadata by product family.
 - `data/regulatory_events.csv` — regulation and market-structure events that change what can be built.
 - `data/observations.csv` — time-stamped liquidity/market observations; designed to grow into spread and volume history.
 - `docs/SCHEMA.md` — field definitions and collection rules.
 
-Initial records are deliberately conservative: a blank value means **not yet verified**, not “none”. Every factual row carries a source URL and verification date.
+Initial records are deliberately conservative: a blank value means **not yet verified**, not “none”. Every factual row carries a source URL and verification date. Contract rows require both an explorer reference and an issuer/product reference before they are treated as verified.
 
 ## Quick start
 
@@ -24,7 +25,7 @@ Initial records are deliberately conservative: a blank value means **not yet ver
 python scripts/validate.py
 ```
 
-The validator uses only Python's standard library.
+The validator uses only Python's standard library and checks IDs, foreign keys, dates, source URLs and contract references.
 
 Example query:
 
@@ -51,9 +52,13 @@ The useful opportunity is not merely to speculate on an “RWA coin”. The dura
 
 `massiv` never assumes a token equals direct ownership of the underlying share. Always inspect `rights_class`, `voting_rights`, `dividend_treatment`, and the source documentation.
 
+A contract address being technically verified onchain also does **not** by itself establish its legal rights. Technical identity and legal/economic structure are tracked separately.
+
 ## Status
 
 Seed dataset started: **2026-09-28**.
+
+Contract registry started: **2026-09-28**, with verified Ethereum/Solana entries for AAPLx, NVDAx and TSLAx plus verified Ethereum entries for SPYx and QQQx.
 
 ## License
 
