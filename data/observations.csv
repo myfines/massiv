@@ -1,0 +1,2 @@
+observation_id,observation_date,ecosystem_id,asset_id,metric_name,comparator,value,unit,source_url,quality,notes
+xstocks-cumulative-volume-2026-03-05,2026-03-05,xstocks,,cumulative_trading_volume,greater_than,20000000000,USD,https://blog.kraken.com/product/xstocks/real-adoption-of-tokenized-stocks,platform_claim_citing_Dune,"Kraken stated xStocks had exceeded $20B cumulative CEX+DEX trading volume since June 2025 launch. Preserve source/quality because this is not an independently recomputed value."
