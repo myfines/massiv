@@ -29,6 +29,26 @@ Key fields:
 - `source_urls`: one or more primary/official URLs separated by `; `.
 - `last_verified`: ISO date (`YYYY-MM-DD`).
 
+## `data/contracts.csv`
+
+One row is one tokenized asset representation on one chain.
+
+Key fields:
+
+- `contract_id`: stable repository identifier for the asset × chain representation.
+- `asset_id`: foreign key into `assets.csv`.
+- `network`: blockchain/network name.
+- `token_standard`: e.g. `ERC-20` or `SPL`.
+- `contract_address`: full contract address or mint; never store shortened display forms such as `0x123...abc`.
+- `explorer_url`: direct explorer page for that exact address/mint.
+- `verification_source_url`: issuer/product source that establishes the token/product identity or chain support.
+- `verification_level`: provenance shorthand such as `explorer+issuer`.
+- `last_verified`: date the mapping was checked.
+
+Contract identity is technical metadata. It does **not** establish shareholder rights or the legal nature of the product; those remain in `assets.csv` / `ecosystems.csv`.
+
+When a product is bridged or wrapped, do not silently treat the wrapped representation as the issuer-native contract. Add a separate row and state the relationship in `notes`.
+
 ## `data/ecosystems.csv`
 
 One row is one tokenized-equity product family or infrastructure program.
@@ -59,7 +79,6 @@ Append-only market measurements.
 
 The next useful tables are:
 
-- `contracts.csv`: exact token contract/mint addresses by chain and verification source.
 - `venues.csv`: venue/API endpoints, geographic access and fee model.
 - `price_snapshots.csv`: timestamped underlying/token bid-ask data.
 - `spreads.csv`: reproducible cross-venue spread calculations.
