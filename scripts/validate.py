@@ -16,6 +16,11 @@ REQUIRED_COLUMNS = {
         "asset_id", "underlying_symbol", "ecosystem_id", "token_symbol",
         "rights_class", "status", "source_urls", "last_verified",
     },
+    "contracts.csv": {
+        "contract_id", "asset_id", "network", "token_standard",
+        "contract_address", "explorer_url", "verification_source_url",
+        "last_verified", "verification_level",
+    },
     "ecosystems.csv": {
         "ecosystem_id", "status", "product_name", "rights_class",
         "source_urls", "last_verified",
@@ -32,6 +37,7 @@ REQUIRED_COLUMNS = {
 
 ID_COLUMNS = {
     "assets.csv": "asset_id",
+    "contracts.csv": "contract_id",
     "ecosystems.csv": "ecosystem_id",
     "regulatory_events.csv": "event_id",
     "observations.csv": "observation_id",
@@ -39,6 +45,7 @@ ID_COLUMNS = {
 
 DATE_COLUMNS = {
     "assets.csv": ["last_verified"],
+    "contracts.csv": ["last_verified"],
     "ecosystems.csv": ["last_verified"],
     "regulatory_events.csv": ["event_date", "last_verified"],
     "observations.csv": ["observation_date"],
@@ -46,6 +53,7 @@ DATE_COLUMNS = {
 
 SOURCE_COLUMNS = {
     "assets.csv": "source_urls",
+    "contracts.csv": "verification_source_url",
     "ecosystems.csv": "source_urls",
     "regulatory_events.csv": "source_url",
     "observations.csv": "source_url",
@@ -108,10 +116,22 @@ def main() -> int:
                     if not url.startswith(("https://", "http://")):
                         errors.append(f"{name}:{line_no}: invalid source URL {url!r}")
 
+            if name == "contracts.csv":
+                explorer_url = (row.get("explorer_url") or "").strip()
+                if not explorer_url.startswith(("https://", "http://")):
+                    errors.append(f"{name}:{line_no}: invalid explorer_url={explorer_url!r}")
+                if not (row.get("contract_address") or "").strip():
+                    errors.append(f"{name}:{line_no}: empty contract_address")
+
     ecosystems = {
         row.get("ecosystem_id", "").strip()
         for row in tables.get("ecosystems.csv", [])
         if row.get("ecosystem_id", "").strip()
+    }
+    assets = {
+        row.get("asset_id", "").strip()
+        for row in tables.get("assets.csv", [])
+        if row.get("asset_id", "").strip()
     }
 
     for name in ("assets.csv", "observations.csv"):
@@ -121,6 +141,11 @@ def main() -> int:
                 errors.append(
                     f"{name}:{line_no}: unknown ecosystem_id={ecosystem_id!r}"
                 )
+
+    for line_no, row in enumerate(tables.get("contracts.csv", []), start=2):
+        asset_id = (row.get("asset_id") or "").strip()
+        if asset_id and asset_id not in assets:
+            errors.append(f"contracts.csv:{line_no}: unknown asset_id={asset_id!r}")
 
     if errors:
         print("Validation failed:")
