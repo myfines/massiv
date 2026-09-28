@@ -10,7 +10,10 @@
 
 ## v0.2 — contract registry
 
-- [ ] Add `contracts.csv` with exact contract/mint address, chain, decimals, verification source and verification timestamp.
+- [x] Add `contracts.csv` with exact contract/mint address, chain, verification source and verification timestamp.
+- [x] Validate contract → asset foreign keys and explorer/source URLs.
+- [ ] Add decimals and issuer-native/bridged classification where independently verified.
+- [ ] Expand verified native contract coverage beyond the seed assets/chains.
 - [ ] Resolve bridged/wrapped representations separately from issuer-native contracts.
 - [ ] Add automated duplicate-contract and symbol-collision checks.
 
