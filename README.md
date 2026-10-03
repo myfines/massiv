@@ -9,7 +9,8 @@ The project is intentionally **data-first**. The canonical CSV data and a derive
 - `data/assets.csv` — stock/ETF → tokenized version mapping.
 - `data/contracts.csv` — exact verified contract/mint addresses by asset and chain.
 - `data/ecosystems.csv` — issuer/platform/chain/rights/trading-hours metadata by product family.
-- `data/regulatory_events.csv` — regulation and market-structure events.
+- `data/regulatory_events.csv` — regulatory actions and market-structure rules.
+- `data/industry_events.csv` — dated infrastructure launches, standards groups, and other ecosystem events that are relevant but are not themselves regulatory actions or live asset mappings.
 - `data/observations.csv` — time-stamped market observations.
 - `docs/SCHEMA.md` — field definitions and collection rules.
 - `docs/API.md` — stable machine-consumption interface.
@@ -46,9 +47,11 @@ The durable asset is the **mapping + history + rights metadata** around tokenize
 
 `massiv` never assumes a token equals direct ownership of the underlying share. Inspect `rights_class`, `voting_rights`, `dividend_treatment`, and source documentation. A technically verified onchain contract also does **not** by itself establish legal rights; technical identity and legal/economic structure are tracked separately.
 
+Industry announcements are also kept separate from regulatory events and live asset records. An infrastructure launch, coalition, application, or announced plan is not evidence that a particular tokenized equity is available to trade.
+
 ## Status
 
-Seed dataset and contract registry started **2026-09-28**. Static JSON API tooling added **2026-09-29**.
+Seed dataset and contract registry started **2026-09-28**. Static JSON API tooling added **2026-09-29**. Industry-event provenance separated from regulatory/live-asset data **2026-10-03**.
 
 ## License
 
