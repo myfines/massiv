@@ -1,0 +1,13 @@
+{
+  "api_version": "v1",
+  "data_version": "2026-10-05",
+  "endpoints": [
+    "assets.json",
+    "contracts.json",
+    "ecosystems.json",
+    "regulatory_events.json",
+    "industry_events.json",
+    "observations.json",
+    "catalog.json"
+  ]
+}
